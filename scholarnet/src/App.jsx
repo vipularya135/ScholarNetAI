@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import './App.css'
 import Scholars from './Scholars.jsx'
+import AIChat from './AIChat.jsx'
 
 function App() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -158,7 +159,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/scholars" element={<Scholars />} />
-        <Route path="/ai-chat" element={<div className="coming-soon">AI Chat page coming soon...</div>} />
+        <Route path="/ai-chat" element={<AIChat />} />
       </Routes>
 
       <footer className="footer">
