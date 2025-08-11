@@ -29,11 +29,6 @@ function App() {
       title: "Global Connections",
       subtitle: "Local Expertise",
       description: "Connect with world-class academics right here in India."
-    },
-    {
-      title: "Innovation Hub",
-      subtitle: "Knowledge Network",
-      description: "Join a network of pioneering researchers and scholars."
     }
   ];
 
@@ -93,8 +88,29 @@ function App() {
             ></span>
           ))}
         </div>
-        
-        {/* Visualize Button */}
+      </div>
+
+      <div className="product-showcase">
+        <div className="showcase-item">
+          <div className="showcase-icon">📚</div>
+          <p>One place for students to find all scholars</p>
+        </div>
+        <div className="showcase-item">
+          <div className="showcase-icon">🏛️</div>
+          <p>110+ institutions across India</p>
+        </div>
+        <div className="showcase-item">
+          <div className="showcase-icon">👨‍🏫</div>
+          <p>10,000+ verified professors</p>
+        </div>
+        <div className="showcase-item">
+          <div className="showcase-icon">🔬</div>
+          <p>Across 10 different domains</p>
+        </div>
+      </div>
+      
+      {/* Visualize Button */}
+      <div className="visualize-button-container">
         <button className="explore-button" onClick={handleExploreClick}>
           Visualize and Analyze Trends
         </button>
@@ -144,6 +160,11 @@ function App() {
         <Route path="/scholars" element={<Scholars />} />
         <Route path="/ai-chat" element={<div className="coming-soon">AI Chat page coming soon...</div>} />
       </Routes>
+
+      <footer className="footer">
+        <p>Vipul Arya</p>
+        <p><a href="mailto:krishnamvipul@gmail.com">krishnamvipul@gmail.com</a></p>
+      </footer>
     </div>
   )
 }
