@@ -1,14 +1,29 @@
-import { useState, useEffect } from 'react'
-import { Routes, Route, Link, useLocation } from 'react-router-dom'
-import './App.css'
-import Scholars from './Scholars.jsx'
-import AIChat from './AIChat.jsx'
+import { useState, useEffect } from 'react';
+import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
+import './App.css';
+import Scholars from './Scholars.jsx';
+import AIChat from './AIChat.jsx';
+import Auth from './Auth.jsx';
 
 function App() {
+  const [token, setToken] = useState(localStorage.getItem('token'));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [showGraphs, setShowGraphs] = useState(false);
   const location = useLocation();
+
+  const setTokenAndStorage = (newToken) => {
+    setToken(newToken);
+    if (newToken) {
+      localStorage.setItem('token', newToken);
+    } else {
+      localStorage.removeItem('token');
+    }
+  };
+
+  const logout = () => {
+    setTokenAndStorage(null);
+  };
 
   const contentData = [
     {
@@ -143,29 +158,35 @@ function App() {
   return (
     <div className="app">
       {/* Navigation Bar */}
-      <nav className="navbar">
-        <div className="nav-logo">
-          <span className="logo-icon">🎓</span>
-          <span className="logo-text">ScholarlyAI</span>
-        </div>
-        <div className="nav-links">
-          <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
-          <Link to="/scholars" className={location.pathname === '/scholars' ? 'active' : ''}>Scholars</Link>
-          <Link to="/ai-chat" className={location.pathname === '/ai-chat' ? 'active' : ''}>AI Chat</Link>
-        </div>
-      </nav>
+      {token && (
+        <nav className="navbar">
+          <div className="nav-logo">
+            <span className="logo-icon">🎓</span>
+            <span className="logo-text">ScholarlyAI</span>
+          </div>
+          <div className="nav-links">
+            <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
+            <Link to="/scholars" className={location.pathname === '/scholars' ? 'active' : ''}>Scholars</Link>
+            <Link to="/ai-chat" className={location.pathname === '/ai-chat' ? 'active' : ''}>AI Chat</Link>
+          </div>
+          <button onClick={logout} className="logout-button">Logout</button>
+        </nav>
+      )}
 
       {/* Routes */}
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/scholars" element={<Scholars />} />
-        <Route path="/ai-chat" element={<AIChat />} />
+        <Route path="/auth" element={<Auth setToken={setTokenAndStorage} />} />
+        <Route path="/" element={token ? <Home /> : <Navigate to="/auth" />} />
+        <Route path="/scholars" element={token ? <Scholars /> : <Navigate to="/auth" />} />
+        <Route path="/ai-chat" element={token ? <AIChat /> : <Navigate to="/auth" />} />
       </Routes>
 
-      <footer className="footer">
-        <p>Vipul Arya</p>
-        <p><a href="mailto:krishnamvipul@gmail.com">krishnamvipul@gmail.com</a></p>
-      </footer>
+      {token && (
+        <footer className="footer">
+          <p>Vipul Arya</p>
+          <p><a href="mailto:krishnamvipul@gmail.com">krishnamvipul@gmail.com</a></p>
+        </footer>
+      )}
     </div>
   )
 }

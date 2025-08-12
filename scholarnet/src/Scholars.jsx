@@ -1,7 +1,6 @@
-import { useState, useEffect, useMemo } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import Papa from 'papaparse'
-import './Scholars.css'
+import { useState, useEffect, useMemo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import './Scholars.css';
 
 function Scholars() {
   const location = useLocation();
@@ -47,60 +46,42 @@ function Scholars() {
   useEffect(() => {
     const loadProfessors = async () => {
       try {
-        const response = await fetch('/src/professors_data.csv');
-        const csvText = await response.text();
+        const response = await fetch('http://localhost:3001/api/professors');
+        const data = await response.json();
         
-        Papa.parse(csvText, {
-          header: true,
-          complete: (results) => {
-            const processedData = results.data
-              .filter(row => row.name && row.name.trim() !== '') // Remove empty rows
-              .map((row, index) => {
-                // Create unique ID based on name and institution instead of numbers
-                const nameSlug = row.name ? row.name.toLowerCase().replace(/[^a-z0-9]/g, '') : '';
-                const institutionSlug = row.institution ? row.institution.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 5) : '';
-                const uniqueId = `${nameSlug}_${institutionSlug}` || `scholar_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
-                
-                return {
-                  id: uniqueId,
-                  name: row.name,
-                  institution: row.institution,
-                  department: row.department,
-                  hIndex: parseInt(row.hIndex) || 0,
-                  i10Index: parseInt(row.i10Index) || 0,
-                  publications: parseInt(row.publications) || 0,
-                  citations: parseInt(row.citations) || 0,
-                  bio: row.bio || 'No bio available',
-                  researchInterests: row.researchInterests || 'No research interests available',
-                  domain: row.domain ? row.domain.trim() : 'Other',
-                  imageUrl: row.imageUrl || null,
-                  iitornit: row.iitornit ? row.iitornit.trim().toLowerCase() : 'other'
-                };
-              });
-            
-            setProfessors(processedData);
-            
-            // Debug: Log unique domains to help identify matching issues
-            const uniqueDomains = [...new Set(processedData.map(p => p.domain))];
-            console.log('Available domains in data:', uniqueDomains);
-            
-            // Log domain counts for verification
-            const domainCounts = {};
-            processedData.forEach(p => {
-              const domain = p.domain || 'Unknown';
-              domainCounts[domain] = (domainCounts[domain] || 0) + 1;
-            });
-            console.log('Domain counts:', domainCounts);
-            
-            setLoading(false);
-          },
-          error: (error) => {
-            console.error('Error parsing CSV:', error);
-            setLoading(false);
-          }
+        const processedData = data
+          .filter(row => row.name && row.name.trim() !== '') // Remove empty rows
+          .map((row) => {
+            return {
+              ...row,
+              hIndex: parseInt(row.hIndex) || 0,
+              i10Index: parseInt(row.i10Index) || 0,
+              publications: parseInt(row.publications) || 0,
+              citations: parseInt(row.citations) || 0,
+              bio: row.bio || 'No bio available',
+              researchInterests: row.researchInterests || 'No research interests available',
+              domain: row.domain ? row.domain.trim() : 'Other',
+              iitornit: row.iitornit ? row.iitornit.trim().toLowerCase() : 'other'
+            };
+          });
+        
+        setProfessors(processedData);
+        
+        // Debug: Log unique domains to help identify matching issues
+        const uniqueDomains = [...new Set(processedData.map(p => p.domain))];
+        console.log('Available domains in data:', uniqueDomains);
+        
+        // Log domain counts for verification
+        const domainCounts = {};
+        processedData.forEach(p => {
+          const domain = p.domain || 'Unknown';
+          domainCounts[domain] = (domainCounts[domain] || 0) + 1;
         });
+        console.log('Domain counts:', domainCounts);
+        
+        setLoading(false);
       } catch (error) {
-        console.error('Error loading CSV:', error);
+        console.error('Error fetching professors:', error);
         setLoading(false);
       }
     };
