@@ -1,166 +1,127 @@
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+/* Auth.css */
 
-        /* --- Darker, modern color palette with bright, glowing accents --- */
-        :root {
-            --primary-color: #88ddff; /* A bright, energetic cyan-blue for accents */
-            --primary-hover-color: #66ccff;
-            --background-start-color: #0a192f; /* Deep, rich navy blue */
-            --background-end-color: #112240; /* Slightly lighter navy for the gradient */
-            --form-background-color: rgba(255, 255, 255, 0.05); /* Semi-transparent dark overlay */
-            --text-color: #e5e5e5; /* A bright, soft gray for primary text */
-            --label-color: #a8b2d1; /* A muted light blue-gray for labels */
-            --border-color: rgba(255, 255, 255, 0.1); /* Subtle, light border on a dark background */
-            --error-color: #ff6347; /* Tomato red for high-visibility errors */
-            --font-family: 'Poppins', sans-serif;
-        }
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #1a3c8c, #4a90e2);
+    font-family: 'Segoe UI', sans-serif;
+    padding: 1rem;
+}
 
-        .auth-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            /* Dark, blue-shaded gradient background */
-            background: linear-gradient(135deg, var(--background-start-color) 0%, var(--background-end-color) 100%);
-            font-family: var(--font-family);
-            padding: 1rem;
-            position: relative;
-            overflow: hidden;
-            color: var(--text-color); /* Set default text color for the container */
-        }
+.auth-form-wrapper {
+    background: white;
+    padding: 2rem 2.5rem;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.5s ease-in-out;
+}
 
-        /* --- No background image, just a clean gradient --- */
+.auth-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
 
-        .auth-form-wrapper {
-            background: var(--form-background-color);
-            padding: 3rem;
-            border-radius: 24px;
-            /* Soft, subtle glow for a floating effect on a dark background */
-            box-shadow: 0 0 40px rgba(136, 221, 255, 0.1);
-            backdrop-filter: blur(15px); /* Increased blur for a better frosted effect */
-            -webkit-backdrop-filter: blur(15px);
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            z-index: 1;
-        }
+.auth-logo {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
 
-        .auth-header {
-            margin-bottom: 2.5rem;
-        }
+.auth-header h2 {
+    color: #1a3c8c;
+    margin: 0.2rem 0;
+}
 
-        .auth-logo {
-            font-size: 3.5rem;
-            display: block;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-            /* A subtle, glowing text shadow to match the theme */
-            text-shadow: 0 0 10px rgba(136, 221, 255, 0.8), 0 0 20px rgba(136, 221, 255, 0.4);
-        }
+.auth-header p {
+    color: #4a4a4a;
+    font-size: 0.9rem;
+}
 
-        .auth-header h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-color);
-            margin-bottom: 0.75rem;
-            text-shadow: 0 0 5px rgba(229, 229, 229, 0.3); /* Subtle glow on heading */
-        }
+.input-group {
+    margin-bottom: 1.2rem;
+}
 
-        .auth-header p {
-            color: var(--label-color);
-            font-size: 1.1rem;
-        }
+.input-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: #1a3c8c;
+}
 
-        .input-group {
-            margin-bottom: 1.75rem;
-            text-align: left;
-            position: relative;
-        }
+.input-group input {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #b0c4de;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
 
-        .input-group label {
-            display: block;
-            margin-bottom: 0.75rem;
-            color: var(--label-color);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
+.input-group input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.4);
+}
 
-        .input-group input {
-            width: 100%;
-            padding: 1.2rem;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-sizing: border-box;
-            font-family: var(--font-family);
-            font-size: 1rem;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            background-color: rgba(0, 0, 0, 0.2); /* Dark, semi-transparent background */
-            color: var(--text-color);
-        }
+.error-message {
+    color: #d32f2f;
+    background-color: #ffebee;
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.4rem;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+}
 
-        .input-group input::placeholder {
-            color: #556688; /* Muted placeholder text on dark background */
-        }
+.auth-button {
+    background-color: #1a3c8c;
+    color: #fff;
+    border: none;
+    padding: 0.7rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
 
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(136, 221, 255, 0.2);
-        }
+.auth-button:hover {
+    background-color: #4a90e2;
+}
 
-        .auth-button {
-            width: 100%;
-            padding: 1.2rem;
-            border: none;
-            border-radius: 12px;
-            background: var(--primary-color);
-            color: var(--background-start-color); /* Dark text on a bright button */
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-            /* Glowing shadow for the button */
-            box-shadow: 0 4px 15px rgba(136, 221, 255, 0.4);
-        }
+.toggle-auth {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #333;
+}
 
-        .auth-button:hover {
-            background: var(--primary-hover-color);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(136, 221, 255, 0.5);
-        }
+.toggle-button {
+    background: none;
+    border: none;
+    color: #1a3c8c;
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 0.3rem;
+    transition: color 0.2s ease-in-out;
+}
 
-        .error-message {
-            color: var(--error-color);
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-            background-color: rgba(255, 99, 71, 0.1);
-            padding: 0.8rem;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 99, 71, 0.2);
-            text-align: center;
-        }
+.toggle-button:hover {
+    color: #4a90e2;
+    text-decoration: underline;
+}
 
-        .toggle-auth {
-            margin-top: 2rem;
-            color: var(--label-color);
-        }
-
-        .toggle-button {
-            background: none;
-            border: none;
-            color: var(--primary-color);
-            cursor: pointer;
-            padding: 0;
-            margin-left: 0.5rem;
-            font-size: inherit;
-            font-weight: 600;
-            transition: color 0.3s;
-            text-shadow: 0 0 5px rgba(136, 221, 255, 0.5); /* Subtle glow on toggle button */
-        }
-
-        .toggle-button:hover {
-            color: var(--primary-hover-color);
-            text-decoration: underline;
-            text-shadow: 0 0 8px rgba(136, 221, 255, 0.8);
-        }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

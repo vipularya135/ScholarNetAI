@@ -12,6 +12,7 @@ const Auth = ({ setToken }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        console.log('Auth button pressed:', isLogin ? 'Login' : 'Register');
         const url = isLogin ? 'http://localhost:3001/api/login' : 'http://localhost:3001/api/register';
         try {
             const response = await fetch(url, {
@@ -22,6 +23,7 @@ const Auth = ({ setToken }) => {
                 body: JSON.stringify({ username, password }),
             });
             const data = await response.json();
+            console.log('Server response:', data);
             if (response.ok) {
                 if (isLogin) {
                     setToken(data.token);
@@ -29,11 +31,13 @@ const Auth = ({ setToken }) => {
                     navigate('/');
                 } else {
                     setIsLogin(true);
+                    setError('Registration successful! Please login.');
                 }
             } else {
                 setError(data.message || 'An error occurred.');
             }
         } catch (err) {
+            console.error('Fetch error:', err);
             setError('Failed to connect to the server.');
         }
     };
